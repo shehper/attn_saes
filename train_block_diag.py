@@ -20,6 +20,7 @@ hook_head_index = None
 l1_coefficients = [2, 5, 10]
 d_in= 512
 
+context_size = 1024
 
 n_heads = 8 if model_name == "gelu-2l" else 12 if model_name == "gpt2-small" else 1
 
@@ -67,7 +68,7 @@ for l1_coefficient in l1_coefficients:
         d_in=d_in,
         dataset_path=dataset_path,
         streaming=True, # pre-download the token dataset
-        context_size=1024,
+        context_size=context_size,
         is_dataset_tokenized=True,
         prepend_bos=True,
 
