@@ -11,8 +11,8 @@ Training block-diagonal SAEs have many advantages.
 - We can check with more certainty the claims of whether a head is "moonosemantic". If we find a feature that does not have the same interpretation as all of the other features in a head, the head is polysemantic. 
 
 I include W&B logs and feature dashboards of the two gpt2-small SAEs.
-- gpt2-small layer 4 [W&B](https://wandb.ai/shehper/gpt2-small-attn-4-sae/runs/pumu7rz3?nw=nwusershehper) [Dashboards]
-- gpt2-small layer 5 [W&B](https://wandb.ai/shehper/gpt2-small-attn-5-sae/runs/s4om7ilc?nw=nwusershehper) [Dashboards]
+- gpt2-small layer 4 [W&B](https://wandb.ai/shehper/gpt2-small-attn-4-sae/runs/pumu7rz3?nw=nwusershehper) [Dashboards](https://shehper.github.io/attn_saes/layer_4.html)
+- gpt2-small layer 5 [W&B](https://wandb.ai/shehper/gpt2-small-attn-5-sae/runs/s4om7ilc?nw=nwusershehper) [Dashboards](https://shehper.github.io/attn_saes/layer_5.html)
 
 A dashboard file contains feature dashboards of the first 10 features from each head. To look through them all, click on the top-left corner to change the number. Features 0-9 belong to head 0, 2048-2057 belong to head 1, and so on. 
 
