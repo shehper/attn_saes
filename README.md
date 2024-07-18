@@ -32,8 +32,12 @@ Next, use `gpt_block_diag_dashboards.ipynb` in this repo to load and analyze das
 
 - The two SAEs have higher L0-norm values (460 and 278) than what is usually reported. It is possible that they are undertrained as the overall loss and the L0-norm were still decreasing when the training stopped. It is possible that with the block-diagonal architecture, L0-norm per head (~38 and 22 respectively) and not the full L0-norm that needs to be small.
 
+One possible explanation is that features are redundant across different heads. For example, if two different heads activate the same induction feature in a context, both will activate in my SAEs. In their SAE, there will perhaps be only one feature, which is a concatenation of two of my features (plus some arbitrary directions from other heads.)
+
 - Include "direct feature attribution by source position" in the feature dashboards, following Kissane et al. This will be needed to fully interpret features in attention head outputs. 
 
 - Kissane et al ([paper](https://arxiv.org/abs/2406.17759)) ([code](https://github.com/ckkissane/attention-output-saes)) seemed to have gotten a better L0-MSE tradeoff than me. They followed Bricken et al while I followed April update. Then why could I not get a better tradeoff? (Am I comparing apples to oranges because of the difference in number of parameters?) They also say in their paper that they targeted L0 of 20 and 80% CE Loss Score. Should I consider sticking to this rule? As it is, my LO values are much higher. 
 
 - I did not take care of good initialization of weights. Taking care of this could easily affect the L0-MSE tradeoff. 
+
+- Speedup training using `torch.compile`, `torch.amp.autocast`, etc. 
