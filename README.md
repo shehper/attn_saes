@@ -5,10 +5,10 @@ SAEs seem to work well on individual attention head outputs. I trained SAEs on c
 I trained SAEs on attention layer outputs of gelu-2l layer-1 and gpt2-small layers 4 and 5. In all cases, SAEs learned interpreable features. 
 
 Training block-diagonal SAEs have many advantages. 
-- With the same expansion factor, the SAEs contain $\sim 1/{n_{\text{heads}}}$ times the number of trainable parameters as a fully dense SAE as trained by Kissane et al. This leads to cheaper costs of training and inference.
-- Each feature is by-design attributed to a single head. We do not compute "direct feature attribution" to get the attribution of a feature to each head, and hence do not worry "whether a multi-head feature is exhibiting attention head superposition".
-- When given a task / prompt, we are able to tell the role that each head plays by looking at the single-head features that activate in that task / prompt. 
-- We can check with more certainty the claims of whether a head is "moonosemantic". If we find a feature that does not have the same interpretation as all of the other features in a head, the head is polysemantic. 
+- With the same expansion factor, the SAEs contain $\sim 1/{n_{\text{heads}}}$ times the number of trainable parameters as a fully dense SAEs. This leads to lower costs of training and inference.
+- Each feature is by-design attributed to a single head. 
+- When given a task / prompt, we hope to be able to tell the role that each head plays by looking at the single-head features that activate in that task / prompt. 
+- We can check with more certainty the claims of whether a head is "moonosemantic". If we find a feature that does not have the same interpretation as all of the other features in a head, the head will be considered polysemantic. 
 
 I include W&B logs and feature dashboards of the two gpt2-small SAEs.
 - gpt2-small layer 4 [W&B](https://wandb.ai/shehper/gpt2-small-attn-4-sae/runs/pumu7rz3?nw=nwusershehper) [Dashboards](https://shehper.github.io/attn_saes/layer_4.html)
@@ -30,9 +30,9 @@ Next, use `gpt_block_diag_dashboards.ipynb` in this repo to load and analyze das
 
 ## TODO
 
-- The two SAEs have higher L0-norm values (460 and 278) than what is usually reported. It is possible that they are undertrained as the overall loss and the L0-norm were still decreasing when the training stopped. It is possible that with the block-diagonal architecture, L0-norm per head (~38 and 22 respectively) and not the full L0-norm that needs to be small.
+- The two SAEs have higher L0-norm values (460 and 278) than what is usually reported. It is possible that they are undertrained as the overall loss and the L0-norm were still decreasing when the training stopped. It is also possible that with the block-diagonal architecture, L0-norm per head (~38 and 22 respectively) and not the full L0-norm that needs to be small.
 
-One possible explanation is that features are redundant across different heads. For example, if two different heads activate the same induction feature in a context, both will activate in my SAEs. In their SAE, there will perhaps be only one feature, which is a concatenation of two of my features (plus some arbitrary directions from other heads.)
+One possible explanation is that features are redundant across different heads. For example, if two different heads activate the same induction feature in a context, both will activate in my SAEs. In Kissane et al's SAE, there will perhaps be only one feature, which is a concatenation of multiple features from my SAEs (plus some arbitrary directions from other heads.)
 
 - Include "direct feature attribution by source position" in the feature dashboards, following Kissane et al. This will be needed to fully interpret features in attention head outputs. 
 
